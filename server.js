@@ -4,7 +4,6 @@ const PORT = process.env.PORT || 3000;
 const express =require('express');
 const app=express();
 const dbnotes = require('./db/db.json');
-const notes = require('./db/db');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

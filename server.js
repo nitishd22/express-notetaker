@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3000;
 const express =require('express');
 const app=express();
 const dbnotes = require('./db/db.json');
+const notes = require('./db/db');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -30,7 +31,7 @@ app.get('/notes', (req, res) => {
 });
 
 function makeNote(body, notesArray){
-  const newN = body;
+  const newNote = body;
   if(!Array.isArray(notesArray))
     notesArray=[];
   if(notesArray.length===0)
@@ -39,19 +40,19 @@ function makeNote(body, notesArray){
   body.id = notesArray[0];
   notesArray[0]++;  
 
-  notesArray.push(newN);
+  notesArray.push(newNote);
   fs.writeFileSync(
     path.join(__dirname, ''),
     JSON.stringify(notesArray, null, 2)
   );
-  return newN;
+  return newNote;
   
 }
 
 app.post('/api/notes', function(req, res){
-  const newN=makeNote(req.body,dbnotes);
+  const newNote=makeNote(req.body,dbnotes);
   console.log(req.body);
-  res.json(newN);
+  res.json(newNote);
 });
 
 function delNote(id, notesArray){

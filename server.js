@@ -3,13 +3,13 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const express =require('express');
 const app=express();
-const notes = require('./db/db.json');
+const dbnotes = require('./db/db.json');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-app.get('/api/notes', function(req, res) {
+app.get('/api/notes', (req, res) => {
   fs.readFile('./db/db.json', (err, data) => {
     if (err) throw err;
     dbData = JSON.parse(data);
@@ -41,7 +41,7 @@ function makeNote(body, notesArray){
 
   notesArray.push(newN);
   fs.writeFileSync(
-    path.join(__dirname, './db/db.json'),
+    path.join(__dirname, ''),
     JSON.stringify(notesArray, null, 2)
   );
   return newN;
@@ -49,7 +49,8 @@ function makeNote(body, notesArray){
 }
 
 app.post('/api/notes', function(req, res){
-  const newN=makeNote(req.body,notes);
+  const newN=makeNote(req.body,dbnotes);
+  console.log(req.body);
   res.json(newN);
 });
 
@@ -69,10 +70,10 @@ function delNote(id, notesArray){
 
 
 app.delete('/api/notes/:id', (req, res) => {
-  delNote(req.params.id, notes);
+  delNote(req.params.id, dbnotes);
   res.json(true);
 });
 
-app.listen(PORT, function(){
+app.listen(PORT, () => {
   console.log(`Now listening on PORT: ${PORT}`);
 });  

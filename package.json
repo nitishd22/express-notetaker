@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "fs": "^0.0.1-security",
+    "notes": "^0.0.4",
+    "path": "^0.12.7"
   }
 }
